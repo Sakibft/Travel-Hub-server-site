@@ -24,23 +24,35 @@ const client = new MongoClient(uri, {
 });
 
 async function run() {
-  const userCollection = client.db("B9A10").collection("users");
+  const usersCollection = client.db("B9A10").collection("users");
+  const spotsCollection = client.db("B9A10").collection("spots");
   try {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
-   
+  //  users
     app.post('/users',async(req,res)=> {
       const user = req.body;
-      const result = await userCollection.insertOne(user);
+      const result = await usersCollection.insertOne(user);
       res.send(result)
       console.log(user);
     })
     app.get('/users', async(req,res)=> {
-      const users = userCollection.find();
+      const users = usersCollection.find();
       const result = await users.toArray()
       res.send(result)
     })
- 
+//  Spots
+app.post('/spots',async(req,res)=> {
+  const user = req.body;
+  const result = await spotsCollection.insertOne(user)
+  res.send(result)
+  console.log(user);
+})
+app.get('/spots', async(req,res)=> {
+  const users = spotsCollection.find();
+  const result = await users.toArray()
+  res.send(result)
+})
 
 
 
