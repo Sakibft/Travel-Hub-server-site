@@ -72,6 +72,30 @@ app.delete('/spots/:id', async(req,res)=> {
   res.send(result)
   console.log(id);
 })
+// update operation
+app.put('/spots/:id', async(req,res)=> {
+  const id = req.params.id;
+  const user = req.body;
+  const query = {_id : new ObjectId(id)}
+  const options = { upsert: true };
+  const upUser = {
+    $set:{
+      country:user.country,
+      spot:user.spot,
+      location:user.location,
+      cost:user.cost,
+      season:user.season,
+      time:user.time,
+      visitor:user.visitor,
+      description:user.description,
+      photo:user.photo
+    }
+   };
+   const result = await spotsCollection.updateOne(query,upUser,options)
+   res.send(result)
+   
+  
+})
  
  
 
