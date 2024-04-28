@@ -26,6 +26,7 @@ const client = new MongoClient(uri, {
 async function run() {
  
   const spotsCollection = client.db("B9A10").collection("spots");
+  const contryColletion = client.db("B9A10").collection("countryes");
   try {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
@@ -83,10 +84,12 @@ app.put('/spots/:id', async(req,res)=> {
    };
    const result = await spotsCollection.updateOne(query,upUser,options)
    res.send(result)
-   
-  
 })
- 
+ app.get('/countryes', async(req,res)=> {
+  const country = contryColletion.find();
+  const result = await country.toArray();
+  res.send(result)
+ })
  
 
 
