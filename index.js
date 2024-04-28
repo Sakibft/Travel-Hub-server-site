@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 // config
 const port = process.env.PORT || 5000;
 const app = express()
@@ -48,12 +48,30 @@ app.post('/spots',async(req,res)=> {
   res.send(result)
   console.log(user);
 })
+
 app.get('/spots', async(req,res)=> {
   const users = spotsCollection.find();
   const result = await users.toArray()
   res.send(result)
 })
 
+app.get('/spots/:id',async(req,res)=> {
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await spotsCollection.findOne(query)
+  res.send(result)
+  console.log(result);
+  console.log(id);
+})
+app.delete('/spots/:id', async(req,res)=> {
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await spotsCollection.deleteOne(query)
+  res.send(result)
+  console.log(id);
+})
+ 
+ 
 
 
     // Send a ping to confirm a successful connection
