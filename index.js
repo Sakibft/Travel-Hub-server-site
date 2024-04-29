@@ -90,7 +90,13 @@ app.put('/spots/:id', async(req,res)=> {
   const result = await country.toArray();
   res.send(result)
  })
- 
+ app.get('/countryes/:country', async(req,res)=> {
+  const country = req.params.country;
+  const query = {country : country};
+  const result = await spotsCollection.find(query).toArray();
+  res.send(result)
+  console.log(country);
+ })
 
 
     // Send a ping to confirm a successful connection
